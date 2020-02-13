@@ -1,5 +1,4 @@
 import parser from 'fast-xml-parser';
-import { fromJSON } from 'convert-to-jcamp';
 
 /**
  * @param  {} file wwith the raw measurement data

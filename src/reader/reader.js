@@ -1,6 +1,5 @@
 import JSZip from 'jszip';
 import { parseDiffractogram } from '../parser/parser';
-import { readFileSync } from 'fs';
 
 /**
  * @param  {} binary
@@ -16,7 +15,7 @@ export async function readBRML(binary, options = {}) {
         let diffractogram = await readDiffractogram(zipFiles);
         return diffractogram;
       },
-      function(e) {
+      function() {
         alert('not a valid zip file'); // ToDo: change to proper error handling
       },
     );

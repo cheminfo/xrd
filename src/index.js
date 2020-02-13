@@ -10,7 +10,6 @@ export function xrdConverter(binary, options = {}) {
     console.log(diffractogram);
   });
 
-  //console.log(diffractogram);
   const result = {
     x: [1, 2, 3, 4],
     y: [2, 3, 4, 5],
