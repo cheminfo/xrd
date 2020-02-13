@@ -6,10 +6,11 @@ import { readBRML } from './reader/reader';
  * @param {object} [options={}]
  */
 export function xrdConverter(binary, options = {}) {
-  // unzip
-  const diffractogram = readBRML(binary);
-  // read xmls
+  readBRML(binary).then((diffractogram) => {
+    console.log(diffractogram);
+  });
 
+  //console.log(diffractogram);
   const result = {
     x: [1, 2, 3, 4],
     y: [2, 3, 4, 5],

@@ -17,13 +17,12 @@ export function parseDiffractogram(file) {
     scanMode: data['DataRoutes']['DataRoute']['ScanMode'],
     scanModeVisibleName: data['DataRoutes']['DataRoute']['ScanModeVisibleName'],
   };
-  console.log(metaData);
   const diffractogram = getXYDiffractogram(
     data['DataRoutes']['DataRoute']['Datum'],
   );
-  console.log(diffractogram);
-  return 42;
+  return diffractogram;
 }
+
 /**
  * @param  {array} data array of strings of the measured points
  */
