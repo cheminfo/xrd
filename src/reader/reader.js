@@ -5,6 +5,7 @@ import { parseDiffractogram } from '../parser/parser';
  * @param  {} binary
  * @param  {} options={}
  */
+// eslint-disable-next-line no-unused-vars
 export function readBRML(binary, options = {}) {
   let zip = new JSZip();
   const diffractogram = zip
