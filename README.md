@@ -4,7 +4,7 @@
 [![build status][ci-image]][ci-url]
 [![npm download][download-image]][download-url]
 
-Convert XRD file to jcamp.
+Convert Bruker XRD file to jcamp.
 
 ## Installation
 
