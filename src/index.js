@@ -5,19 +5,12 @@ import { readBRML } from './reader/reader';
  * @param {ArrayBuffer} binary data readed of zipf ile
  * @param {object} [options={}]
  */
-export function xrdConverter(binary, options = {}) {
-  readBRML(binary).then((diffractogram) => {
-    console.log(diffractogram);
-  });
-
-  const result = {
-    x: [1, 2, 3, 4],
-    y: [2, 3, 4, 5],
-  };
+export async function xrdConverter(binary, options = {}) {
+  const result = await readBRML(binary, options);
 
   // write to jcamp
-  const jcamp = fromJSON(result, { type: 'XRD' });
-
+  const jcamp = fromJSON(result.data, result.metadata);
   console.log(jcamp);
+
   return 42;
 }

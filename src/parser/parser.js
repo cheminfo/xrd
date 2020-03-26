@@ -1,7 +1,7 @@
 import parser from 'fast-xml-parser';
 
 /**
- * @param  {} file wwith the raw measurement data
+ * @param  {} file with the raw measurement data
  */
 export function parseDiffractogram(file) {
   let json = parser.parse(file);
@@ -43,11 +43,18 @@ function getXYDiffractogram(data) {
   });
 
   const diffractogram = {
-    axis1: axis1,
-    axis2: axis2,
-    measuredTimePerStep: measuredTimePerStep,
-    plannedTimePerStep: plannedTimePerStep,
-    counts: counts,
+    data: { x: axis1, y: counts },
+    metadata: {
+      xUnit: '2 theta',
+      yUnit: 'counts',
+      type: 'XRD pattern',
+      origin: 'Data converted from BRML using convert-to-jcamp',
+      info: {
+        axis2: axis2,
+        measuredTimePerStep: measuredTimePerStep,
+        plannedTimePerStep: plannedTimePerStep,
+      },
+    },
   };
 
   return diffractogram;
