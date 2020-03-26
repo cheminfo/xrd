@@ -6,19 +6,28 @@ import parser from 'fast-xml-parser';
 export function parseDiffractogram(file) {
   let json = parser.parse(file);
   const data = json['RawData'];
-  let metaData = {
+  let adddata = {
     startTime: data['TimeStampStarted'],
     endTime: data['TimeStampFinished'],
-    measurmentPoints: data['DataRoutes']['DataRoute']['MeasurementPoints'],
-    timePerStep: data['DataRoutes']['DataRoute']['TimePerStep'],
+    measurmentPoints:
+      data['DataRoutes']['DataRoute']['ScanInformation']['MeasurementPoints'],
+    timePerStep:
+      data['DataRoutes']['DataRoute']['ScanInformation']['TimePerStep'],
     timePerStepEffective:
-      data['DataRoutes']['DataRoute']['TimePerStepEffective'],
-    scanMode: data['DataRoutes']['DataRoute']['ScanMode'],
-    scanModeVisibleName: data['DataRoutes']['DataRoute']['ScanModeVisibleName'],
+      data['DataRoutes']['DataRoute']['ScanInformation'][
+        'TimePerStepEffective'
+      ],
+    scanMode: data['DataRoutes']['DataRoute']['ScanInformation']['ScanMode'],
+    scanModeVisibleName:
+      data['DataRoutes']['DataRoute']['ScanInformation']['ScanModeVisibleName'],
   };
+
   const diffractogram = getXYDiffractogram(
     data['DataRoutes']['DataRoute']['Datum'],
   );
+
+  const info = { ...adddata, ...diffractogram.metadata.info };
+  diffractogram.metadata.info = info;
   return diffractogram;
 }
 
