@@ -5,7 +5,7 @@ import { join } from 'path';
 describe('readBRML', () => {
   const data = readFileSync(join(__dirname, '../../data/test.brml'));
 
-  it('should return 42', async () => {
+  it('check the output dictionary', async () => {
     let result = await readBRML(data);
     expect(result).toHaveProperty('data');
     expect(result).toHaveProperty('metadata');

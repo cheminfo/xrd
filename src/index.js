@@ -1,4 +1,5 @@
 import { fromJSON } from 'convert-to-jcamp';
+
 import { readBRML } from './reader/reader';
 
 /**
@@ -10,7 +11,6 @@ export async function xrdConverter(binary, options = {}) {
 
   // write to jcamp
   const jcamp = fromJSON(result.data, result.metadata);
-  console.log(jcamp);
 
-  return 42;
+  return jcamp;
 }

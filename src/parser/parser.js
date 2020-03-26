@@ -4,30 +4,53 @@ import parser from 'fast-xml-parser';
  * @param  {} file with the raw measurement data
  */
 export function parseDiffractogram(file) {
-  let json = parser.parse(file);
-  const data = json['RawData'];
+  let json = parser.parse(file, {
+    ignoreAttributes: false,
+    attributeNamePrefix: '__',
+  });
+  const data = json.RawData;
+
+  let axes = [];
+  data.DataRoutes.DataRoute.ScanInformation.ScanAxes.ScanAxisInfo.forEach(
+    (element) => {
+      axes.push({
+        id: element.__AxisId,
+        name: element.__AxisName,
+        unitBase: element.Unit.__Base,
+        unitPrefix: element.Unit.__Prefix,
+        reference: element.reference,
+        start: element.start,
+        stop: element.stop,
+        increment: element.increment,
+      });
+    },
+  );
+
   let adddata = {
-    startTime: data['TimeStampStarted'],
-    endTime: data['TimeStampFinished'],
+    startTime: data.TimeStampStarted,
+    endTime: data.TimeStampFinished,
     measurmentPoints:
-      data['DataRoutes']['DataRoute']['ScanInformation']['MeasurementPoints'],
-    timePerStep:
-      data['DataRoutes']['DataRoute']['ScanInformation']['TimePerStep'],
+      data.DataRoutes.DataRoute.ScanInformation.MeasurementPoints,
+    timePerStep: data.DataRoutes.DataRoute.ScanInformation.TimePerStep,
     timePerStepEffective:
-      data['DataRoutes']['DataRoute']['ScanInformation'][
-        'TimePerStepEffective'
-      ],
-    scanMode: data['DataRoutes']['DataRoute']['ScanInformation']['ScanMode'],
+      data.DataRoutes.DataRoute.ScanInformation.TimePerStepEffective,
+    scanMode: data.DataRoutes.DataRoute.ScanInformation.ScanMode,
     scanModeVisibleName:
-      data['DataRoutes']['DataRoute']['ScanInformation']['ScanModeVisibleName'],
+      data.DataRoutes.DataRoute.ScanInformation.ScanModeVisibleName,
+    userName: data.Identifier.__UserName,
+    machineName: data.Identifier.__MachineName,
+    guid: data.Identifier.Guid,
+    axes: axes,
+    goniometerType: data.FixedInformation.Instrument.GoniometerType,
   };
 
-  const diffractogram = getXYDiffractogram(
-    data['DataRoutes']['DataRoute']['Datum'],
-  );
+  const diffractogram = getXYDiffractogram(data.DataRoutes.DataRoute.Datum);
 
   const info = { ...adddata, ...diffractogram.metadata.info };
   diffractogram.metadata.info = info;
+  diffractogram.metadata.xUnit =
+    adddata.axes[0].name + ' / ' + adddata.axes[0].unitBase;
+
   return diffractogram;
 }
 
@@ -35,7 +58,6 @@ export function parseDiffractogram(file) {
  * @param  {array} data array of strings of the measured points
  */
 function getXYDiffractogram(data) {
-  // ToDo: I do not know if axis1 and axis2 are generally theta and 2 theta, need to check, I hope that the format is always like this
   let axis1 = [];
   let axis2 = [];
   let measuredTimePerStep = [];

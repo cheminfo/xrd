@@ -15,6 +15,9 @@ describe('parseDiffractogram', () => {
     expect(result.metadata).toHaveProperty('yUnit');
     expect(result.metadata).toHaveProperty('type');
     expect(result.metadata).toHaveProperty('origin');
+    expect(result.metadata.info).toHaveProperty('userName');
+    expect(result.metadata.info).toHaveProperty('axes');
+    expect(result.metadata.info.axes).toHaveLength(2);
     expect(result.data.x).toHaveLength(3714);
     expect(result.data.y).toHaveLength(3714);
   });

@@ -51,6 +51,7 @@
   "dependencies": {
     "convert-to-jcamp": "^2.0.1",
     "fast-xml-parser": "^3.16.0",
+    "jcampconverter": "^4.1.0",
     "jszip": "^3.2.2"
   }
 }
