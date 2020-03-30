@@ -1,21 +1,16 @@
-//import JSZip from 'jszip';
-//import xmlParser from 'fast-xml-parser';
 import { fromJSON } from 'convert-to-jcamp';
 
+import { readBRML } from './reader/reader';
+
 /**
- *
- * @param {ArrayBuffer} binary
+ * @param {ArrayBuffer} binary data readed of zipf ile
  * @param {object} [options={}]
- * @param {number} [options.maxLength=1234]
  */
-export function xrdConverter() {
-  // need to do stuff
+export async function xrdConverter(binary, options = {}) {
+  const result = await readBRML(binary, options);
 
-  const result = {
-    x: [1, 2, 3, 4],
-    y: [2, 3, 4, 5],
-  };
+  // write to jcamp
+  const jcamp = fromJSON(result.data, result.metadata);
 
-  // convert to XRD
-  return fromJSON(result, { type: 'XRD' });
+  return jcamp;
 }
