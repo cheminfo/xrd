@@ -48,7 +48,7 @@ export function parseDiffractogram(file) {
 
   const info = { ...adddata, ...diffractogram.metadata.info };
   diffractogram.metadata.info = info;
-  diffractogram.metadata.xUnit = `${adddata.axes[0].name} / ${adddata.axes[0].unitBase}`;
+  diffractogram.metadata.xUnit = `${adddata.axes[0].name} / ${adddata.axes[0].unitBase} [°]`;
 
   return diffractogram;
 }
