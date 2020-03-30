@@ -21,5 +21,9 @@ describe('parseDiffractogram', () => {
     expect(result.metadata.info.axes).toHaveLength(2);
     expect(result.data.x).toHaveLength(3714);
     expect(result.data.y).toHaveLength(3714);
+    expect(result.data.x.slice(0, 3)).toStrictEqual([2, 2.0102, 2.0205]);
+    expect(result.data.y.slice(0, 3)).toStrictEqual([1080, 1024, 1009]);
+    expect(result.data.x[3714 - 1]).toStrictEqual(40.0099);
+    expect(result.data.y[3714 - 1]).toStrictEqual(472);
   });
 });
