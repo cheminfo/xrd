@@ -12,6 +12,6 @@ describe('xrdConverter', () => {
     const spectrum = convert(result).spectra[0];
     expect(spectrum).toHaveProperty('dataType');
     expect(spectrum.data[0]).toHaveLength(spectrum.nbPoints * 2);
-    expect(spectrum.xUnit).toStrictEqual('TwoTheta / Degree');
+    expect(spectrum.xUnit).toStrictEqual('TwoTheta / Degree [°]');
   });
 });
