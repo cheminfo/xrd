@@ -7,11 +7,13 @@ import { xrdConverter } from '..';
 
 describe('xrdConverter', () => {
   const data = readFileSync(join(__dirname, '../../data/test.brml'));
+
   it('check the output jcamp', async () => {
     const result = await xrdConverter(data);
-    const spectrum = convert(result).spectra[0];
-    expect(spectrum).toHaveProperty('dataType');
-    expect(spectrum.data[0]).toHaveLength(spectrum.nbPoints * 2);
-    expect(spectrum.xUnit).toStrictEqual('TwoTheta / Degree [°]');
+
+    const entry = convert(result).flatten[0];
+    expect(entry).toHaveProperty('dataType');
+    expect(entry.spectra[0].data.x).toHaveLength(2443);
+    expect(entry.spectra[0].xUnit).toStrictEqual('TwoTheta / Degree [°]');
   });
 });
