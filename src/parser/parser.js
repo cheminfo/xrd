@@ -48,7 +48,10 @@ export function parseDiffractogram(file) {
 
   diffractogram.meta = { ...adddata, ...diffractogram.meta };
 
-  diffractogram.info.xUnits = `${adddata.axes[0].name} / ${adddata.axes[0].unitBase} [°]`;
+  let label = adddata.axes[0].name.replace(/two/i, '2').replace(/theta/i, 'ϴ');
+  let unit = adddata.axes[0].unitBase.replace(/degree/i, '°');
+
+  diffractogram.info.xUnits = `${label} [${unit}]`;
 
   return diffractogram;
 }
@@ -75,7 +78,7 @@ function getXYDiffractogram(data) {
   const diffractogram = {
     data: { x: axis1, y: counts },
     info: {
-      xUnits: '2 theta',
+      xUnits: '2ϴ [°]',
       yUnits: 'counts',
       dataType: 'XRD pattern',
       origin: 'Data converted from BRML using convert-to-jcamp',

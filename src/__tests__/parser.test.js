@@ -10,7 +10,7 @@ describe('parseDiffractogram', () => {
     expect(result).toHaveProperty('data');
     expect(result.data).toHaveProperty('x');
     expect(result.data).toHaveProperty('y');
-    expect(result.info.xUnits).toBe('TwoTheta / Degree [°]');
+    expect(result.info.xUnits).toBe('2ϴ [°]');
     expect(result.info.yUnits).toBe('counts');
     expect(result.info.dataType).toBe('XRD pattern');
     expect(result.info.origin).toBe(
