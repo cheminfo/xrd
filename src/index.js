@@ -9,7 +9,7 @@ import { readBRML } from './reader/reader';
 async function xrdConverter(binary, options = {}) {
   const result = await readBRML(binary, options);
   // write to jcamp
-  const jcamp = fromJSON(result.data, result.metadata);
+  const jcamp = fromJSON(result.data, { meta: result.meta, info: result.info });
 
   return jcamp;
 }

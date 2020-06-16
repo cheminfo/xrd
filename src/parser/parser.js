@@ -46,9 +46,9 @@ export function parseDiffractogram(file) {
 
   const diffractogram = getXYDiffractogram(data.DataRoutes.DataRoute.Datum);
 
-  const info = { ...adddata, ...diffractogram.metadata.info };
-  diffractogram.metadata.info = info;
-  diffractogram.metadata.xUnit = `${adddata.axes[0].name} / ${adddata.axes[0].unitBase} [°]`;
+  diffractogram.meta = { ...adddata, ...diffractogram.meta };
+
+  diffractogram.info.xUnits = `${adddata.axes[0].name} / ${adddata.axes[0].unitBase} [°]`;
 
   return diffractogram;
 }
@@ -74,16 +74,16 @@ function getXYDiffractogram(data) {
 
   const diffractogram = {
     data: { x: axis1, y: counts },
-    metadata: {
-      xUnit: '2 theta',
-      yUnit: 'counts',
-      type: 'XRD pattern',
+    info: {
+      xUnits: '2 theta',
+      yUnits: 'counts',
+      dataType: 'XRD pattern',
       origin: 'Data converted from BRML using convert-to-jcamp',
-      info: {
-        axis2: axis2,
-        measuredTimePerStep: measuredTimePerStep,
-        plannedTimePerStep: plannedTimePerStep,
-      },
+    },
+    meta: {
+      axis2: axis2,
+      measuredTimePerStep: measuredTimePerStep,
+      plannedTimePerStep: plannedTimePerStep,
     },
   };
 
