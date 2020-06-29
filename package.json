@@ -1,0 +1,60 @@
+{
+  "name": "xrd",
+  "version": "0.2.1",
+  "description": "Convert XRD file to jcamp",
+  "main": "lib/index.js",
+  "module": "src/index.js",
+  "files": [
+    "lib",
+    "src"
+  ],
+  "scripts": {
+    "build": "cheminfo-build --entry src/index.js --root XRD",
+    "eslint": "eslint src",
+    "eslint-fix": "npm run eslint -- --fix",
+    "prepublishOnly": "rollup -c",
+    "test": "npm run test-coverage && npm run eslint",
+    "test-coverage": "jest --coverage",
+    "test-only": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cheminfo/xrd.git"
+  },
+  "keywords": [],
+  "author": "Luc Patiny, Kevin Maik Jablonka",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cheminfo/xrd/issues"
+  },
+  "homepage": "https://github.com/cheminfo/xrd#readme",
+  "jest": {
+    "testEnvironment": "node"
+  },
+  "prettier": {
+    "arrowParens": "always",
+    "semi": true,
+    "singleQuote": true,
+    "tabWidth": 2,
+    "trailingComma": "all"
+  },
+  "devDependencies": {
+    "@babel/plugin-transform-modules-commonjs": "^7.10.1",
+    "cheminfo-build": "^1.1.1",
+    "eslint": "^7.2.0",
+    "eslint-config-cheminfo": "^4.0.0",
+    "eslint-plugin-import": "^2.21.2",
+    "eslint-plugin-jest": "^23.13.2",
+    "eslint-plugin-prettier": "^3.1.4",
+    "jcampconverter": "^7.1.0",
+    "jest": "^26.0.1",
+    "prettier": "^2.0.5",
+    "rollup": "^2.16.1"
+  },
+  "dependencies": {
+    "convert-to-jcamp": "^3.1.0",
+    "fast-xml-parser": "^3.17.4",
+    "jcampconverter": "^7.1.0",
+    "jszip": "^3.5.0"
+  }
+}
