@@ -1,9 +1,9 @@
 import { readFileSync } from 'fs';
 import { join } from 'path';
 
-import { parseDiffractogram } from '../parser/parser';
+import { parseDiffractogram, parseXY } from '../parser/parser';
 
-describe('parseDiffractogram', () => {
+describe('parseBRML', () => {
   const xml = readFileSync(join(__dirname, '../../data/RawData0.xml'), 'utf8');
   it('check the dictionary', () => {
     let result = parseDiffractogram(xml);
@@ -26,5 +26,22 @@ describe('parseDiffractogram', () => {
     expect(result.data.y.slice(0, 3)).toStrictEqual([1080, 1024, 1009]);
     expect(result.data.x[3714 - 1]).toStrictEqual(40.0099);
     expect(result.data.y[3714 - 1]).toStrictEqual(472);
+  });
+});
+
+describe('parseXY', () => {
+  const xy = readFileSync(
+    join(__dirname, '../../data/MG1-Cu2O-28_bg_subtracted.xy'),
+    'utf8',
+  );
+
+  it('check the dictionary', () => {
+    const diffractogram = parseXY(xy);
+    expect(diffractogram.meta.userName).toBe('Lab Manager');
+    expect(diffractogram.data.x[0]).toStrictEqual(10);
+    expect(diffractogram.data.y[1]).toStrictEqual(-0.0755227112146954);
+    expect(diffractogram.info.origin).toBe(
+      'Data converted from xy using convert-to-jcamp',
+    );
   });
 });
