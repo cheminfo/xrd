@@ -1,7 +1,7 @@
 import { readFileSync } from 'fs';
 import { join } from 'path';
 
-import { readBRML } from '../reader/reader';
+import { readBRML } from '../reader/readBRML';
 
 describe('readBRML', () => {
   const data = readFileSync(join(__dirname, '../../data/test.brml'));

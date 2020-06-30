@@ -1,7 +1,7 @@
 import { fromJSON } from 'convert-to-jcamp';
 
-import { parseXY } from './parser/parser';
-import { readBRML } from './reader/reader';
+import { readBRML } from './reader/readBRML';
+import { readXY } from './reader/readXY';
 
 /**
  * @param {ArrayBuffer} binary data read of zip file
@@ -17,7 +17,7 @@ async function xrdConverter(binary, filetype = 'brml', options = {}) {
     });
     return jcamp;
   } else if (filetype.match('xy')) {
-    const result = parseXY(binary, options);
+    const result = readXY(binary, options);
     const jcamp = fromJSON(result.data, {
       meta: result.meta,
       info: result.info,
@@ -26,4 +26,4 @@ async function xrdConverter(binary, filetype = 'brml', options = {}) {
   }
 }
 
-export { xrdConverter, readBRML, parseXY };
+export { xrdConverter, readBRML, readXY };

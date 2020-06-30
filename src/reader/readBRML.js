@@ -1,6 +1,6 @@
 import JSZip from 'jszip/dist/jszip.min.js';
 
-import { parseDiffractogram, parseXY } from '../parser/parser';
+import { parseDiffractogram } from '../parser/parserBRML';
 
 /**
  * @param  {} binary
@@ -15,10 +15,5 @@ export async function readBRML(binary, options = {}) {
 
   const diffractogram = parseDiffractogram(txt);
 
-  return diffractogram;
-}
-
-export function readXY(file) {
-  const diffractogram = parseXY(file);
   return diffractogram;
 }
