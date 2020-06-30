@@ -2,6 +2,7 @@ function trimReplace(s) {
   let tmp = s.split(':');
   return tmp[1].replace('"', '').replace("'", '').trim();
 }
+// eslint-disable-next-line no-unused-vars
 export function parseXY(file, options = {}) {
   let lines = file.split('\n');
   const header = lines[0];
