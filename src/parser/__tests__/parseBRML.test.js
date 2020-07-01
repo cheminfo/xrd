@@ -1,7 +1,7 @@
 import { readFileSync } from 'fs';
 import { join } from 'path';
 
-import { parseDiffractogram, readBRML } from '../parserBRML';
+import { parseDiffractogram, readBRML } from '../parseBRML';
 
 describe('parseBRML', () => {
   const xml = readFileSync(

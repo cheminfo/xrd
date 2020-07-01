@@ -1,7 +1,7 @@
 import { fromJSON } from 'convert-to-jcamp';
 
+import { readBRML } from './parser/parseBRML';
 import { parseXY } from './parser/parseXY';
-import { readBRML } from './parser/parserBRML';
 
 /**
  * @param {file} binary
