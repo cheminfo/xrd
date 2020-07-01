@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 import parser from 'fast-xml-parser';
+import JSZip from 'jszip/dist/jszip.min.js';
 
 /**
  * @param  {} file with the raw measurement data
@@ -11,20 +12,17 @@ export function parseDiffractogram(file) {
   });
   const data = json.RawData;
 
-  let axes = [];
-  data.DataRoutes.DataRoute.ScanInformation.ScanAxes.ScanAxisInfo.forEach(
-    (element) => {
-      axes.push({
-        id: element.__AxisId,
-        name: element.__AxisName,
-        unitBase: element.Unit.__Base,
-        unitPrefix: element.Unit.__Prefix,
-        reference: element.reference,
-        start: element.start,
-        stop: element.stop,
-        increment: element.increment,
-      });
-    },
+  let axes = data.DataRoutes.DataRoute.ScanInformation.ScanAxes.ScanAxisInfo.map(
+    (element) => ({
+      id: element.__AxisId,
+      name: element.__AxisName,
+      unitBase: element.Unit.__Base,
+      unitPrefix: element.Unit.__Prefix,
+      reference: element.reference,
+      start: element.start,
+      stop: element.stop,
+      increment: element.increment,
+    }),
   );
 
   let adddata = {
@@ -90,6 +88,17 @@ function getXYDiffractogram(data) {
       plannedTimePerStep: plannedTimePerStep,
     },
   };
+
+  return diffractogram;
+}
+
+export async function readBRML(binary, options = {}) {
+  let zip = new JSZip();
+  const txt = await zip.loadAsync(binary).then(function (zipFiles) {
+    return zipFiles.file('Experiment0/RawData0.xml').async('text');
+  });
+
+  const diffractogram = parseDiffractogram(txt);
 
   return diffractogram;
 }

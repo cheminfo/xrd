@@ -4,10 +4,9 @@ function trimReplace(s) {
 }
 // eslint-disable-next-line no-unused-vars
 export function parseXY(file, options = {}) {
-  let lines = file.split('\n');
+  let lines = file.split('\n').filter((line) => !line.match(/^\s*$/));
   const header = lines[0];
   lines.splice(0, 1); // header line
-  lines.splice(-1, 1); // last empty line
   let data = {
     x: [],
     y: [],

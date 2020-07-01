@@ -1,29 +1,31 @@
 import { fromJSON } from 'convert-to-jcamp';
 
-import { readBRML } from './reader/readBRML';
-import { readXY } from './reader/readXY';
+import { parseXY } from './parser/parseXY';
+import { readBRML } from './parser/parserBRML';
 
 /**
- * @param {ArrayBuffer} binary data read of zip file
+ * @param {file} binary
  * @param {string} filetype
  * @param {object} [options={}]
  */
-async function xrdConverter(binary, filetype = 'brml', options = {}) {
-  if (filetype.match('brml')) {
-    const result = await readBRML(binary, options);
-    const jcamp = fromJSON(result.data, {
-      meta: result.meta,
-      info: result.info,
-    });
-    return jcamp;
-  } else if (filetype.match('xy')) {
-    const result = readXY(binary, options);
-    const jcamp = fromJSON(result.data, {
-      meta: result.meta,
-      info: result.info,
-    });
-    return jcamp;
+async function xrdConverter(binary, options) {
+  const fileType = options.fileType;
+  let result;
+  switch (fileType.toLowerCase()) {
+    case 'brml':
+      result = await readBRML(binary);
+      break;
+    case 'xy':
+      result = parseXY(binary);
+      break;
+    default:
+      throw new Error('Filetype is required');
   }
+  const jcamp = fromJSON(result.data, {
+    meta: result.meta,
+    info: result.info,
+  });
+  return jcamp;
 }
 
-export { xrdConverter, readBRML, readXY };
+export { xrdConverter, readBRML, parseXY };
