@@ -4,7 +4,9 @@
 [![build status][ci-image]][ci-url]
 [![npm download][download-image]][download-url]
 
-Convert Bruker XRD file to jcamp.
+Please use [xrd-analysis](https://github.com/kjappelbaum/xrd-analysis), which is more actively developed. 
+
+Convert Bruker XRD file to jcamp. 
 
 ## Installation
 
